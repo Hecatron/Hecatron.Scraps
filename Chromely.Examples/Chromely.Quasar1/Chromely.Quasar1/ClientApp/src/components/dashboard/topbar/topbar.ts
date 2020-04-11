@@ -31,7 +31,7 @@ export default class TopbarComponent extends Vue {
 
     }
 
-    private toggle_maxrestore() {
-        this.$refs.wincontrol.toggleMaxRestore();
-    }
+    //private toggle_maxrestore() {
+    //    this.$refs.wincontrol.toggleMaxRestore();
+    //}
 }

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;
+using Chromely.Quasar1.Providers.Chromely;
 
 namespace Chromely.Quasar1 {
 
@@ -28,6 +29,9 @@ namespace Chromely.Quasar1 {
             // Add framework services.
             services.AddRazorPages();
             services.AddControllersWithViews();
+
+            // Chromely Window Control
+            services.AddSingleton<IChromelyWindowService, ChromelyWindowService>();
 
             // Load in configuration settings for dependency injection
             ConfigLoader.SetupConfigServices(services, Configuration);

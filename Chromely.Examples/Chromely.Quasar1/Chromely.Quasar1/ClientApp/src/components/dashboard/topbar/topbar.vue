@@ -7,7 +7,6 @@
     <topmenu-component />
 
     <div class="col text-center text-weight-bold nonselectable"
-         @dblclick="toggle_maxrestore"
          v-if="isChromely">
       App Title
     </div>

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Chromely.Quasar1 {
@@ -65,6 +66,12 @@ namespace Chromely.Quasar1 {
             config.WindowOptions.Title = appopts.ChromelyFrameTitle;
             config.StartUrl = appopts.Urls.First();
             config.WindowOptions.WindowFrameless = appopts.ChromelyFrameless;
+
+            var dragzones = config.WindowOptions.FramelessOption.DragZones;
+            dragzones.Clear();
+            dragzones.Add(new DragZoneConfiguration(32, 0, 120, 100));
+            config.WindowOptions.FramelessOption.DblClick = ChromelyWindowService.DoubleClickDrag_Handler;
+
             config.DebuggingMode = appopts.ChromelyDebuggingMode;
 
             AppBuilder
