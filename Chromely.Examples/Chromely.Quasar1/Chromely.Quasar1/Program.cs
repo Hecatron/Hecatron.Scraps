@@ -70,7 +70,7 @@ namespace Chromely.Quasar1 {
             var dragzones = config.WindowOptions.FramelessOption.DragZones;
             dragzones.Clear();
             dragzones.Add(new DragZoneConfiguration(32, 0, 120, 100));
-            config.WindowOptions.FramelessOption.DblClick = ChromelyWindowService.DoubleClickDrag_Handler;
+            //config.WindowOptions.FramelessOption.DblClick = ChromelyWindowService.DoubleClickDrag_Handler;
 
             config.DebuggingMode = appopts.ChromelyDebuggingMode;
 

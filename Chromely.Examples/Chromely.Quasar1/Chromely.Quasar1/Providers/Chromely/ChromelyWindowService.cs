@@ -1,7 +1,4 @@
-using System;
-using System.Runtime.InteropServices;
 using Chromely.Core.Host;
-using static Chromely.Native.WinNativeMethods;
 
 namespace Chromely.Quasar1.Providers.Chromely {
 
@@ -18,50 +15,38 @@ namespace Chromely.Quasar1.Providers.Chromely {
         /// <returns> True if it succeeds. </returns>
         public bool Maximize() {
             var app = CustomChromelyApp.SingleTonInstance;
-            var ret = false;
             if (app != null)
-                ret = ShowWindow(app.WindowHandle, ShowWindowCommand.SW_SHOWMAXIMIZED);
-            return ret;
+                return app.Window.NativeHost.SetWindowState(WindowState.Maximize);
+            return false;
         }
 
         /// <summary> Minimizes the window.  </summary>
         /// <returns> True if it succeeds. </returns>
         public bool Minimize() {
             var app = CustomChromelyApp.SingleTonInstance;
-            var ret = false;
             if (app != null)
-                ret = ShowWindow(app.WindowHandle, ShowWindowCommand.SW_SHOWMINIMIZED);
-            return ret;
+                return app.Window.NativeHost.SetWindowState(WindowState.Minimize);
+            return false;
         }
 
         /// <summary> Restores the window.  </summary>
         /// <returns> True if succeeds. </returns>
         public bool Restore() {
             var app = CustomChromelyApp.SingleTonInstance;
-            var ret = false;
             if (app != null)
-                ret = ShowWindow(app.WindowHandle, ShowWindowCommand.SW_RESTORE);
-            return ret;
+                return app.Window.NativeHost.SetWindowState(WindowState.Normal);
+            return false;
         }
 
         /// <summary> Handle Double click on drag bar events. </summary>
         public static void DoubleClickDrag_Handler(IChromelyNativeHost nativeHost) {
-            var maximised = IsWindowMaximized(nativeHost.Handle);
-            var app = CustomChromelyApp.SingleTonInstance;
-            if (maximised) {
-                ShowWindow(app.WindowHandle, ShowWindowCommand.SW_RESTORE);
+            var state = nativeHost.GetWindowState();
+            if (state == WindowState.Maximize) {
+                nativeHost.SetWindowState(WindowState.Normal);
             }
             else {
-                ShowWindow(app.WindowHandle, ShowWindowCommand.SW_SHOWMAXIMIZED);
+                nativeHost.SetWindowState(WindowState.Maximize);
             }
         }
-
-        private static bool IsWindowMaximized(IntPtr hWnd) {
-            WINDOWPLACEMENT placement = new WINDOWPLACEMENT();
-            placement.Length = Marshal.SizeOf(placement);
-            GetWindowPlacement(hWnd, ref placement);
-            return placement.ShowCmd == ShowWindowCommands.Maximized;
-        }
-
     }
 }
